@@ -4,16 +4,58 @@ import BookPage from './components/BookPage'
 import { bookPages } from './content/book'
 
 const TRANSITION_MS = 200
+const FOCUS_TRANSITION_MS = 260
 
 function App() {
   const [currentPage, setCurrentPage] = useState(0)
   const [isExiting, setIsExiting] = useState(false)
+  const [bookFocusState, setBookFocusState] = useState<
+    'closed' | 'opening' | 'open' | 'closing'
+  >('closed')
   const [direction, setDirection] = useState<'next' | 'prev'>('next')
   const exitTimer = useRef<number | null>(null)
+  const focusTimer = useRef<number | null>(null)
   const touchStartX = useRef(0)
+  const focusToggleRef = useRef<HTMLButtonElement | null>(null)
+  const closeFocusRef = useRef<HTMLButtonElement | null>(null)
+  const wasBookFocused = useRef(false)
 
   const totalPages = bookPages.length
   const activePage = bookPages[currentPage]
+  const isBookFocused = bookFocusState !== 'closed'
+
+  function isDesktopViewport() {
+    return window.innerWidth >= 1024
+  }
+
+  function clearFocusTimer() {
+    if (focusTimer.current !== null) {
+      window.clearTimeout(focusTimer.current)
+      focusTimer.current = null
+    }
+  }
+
+  function openBookFocus() {
+    if (isDesktopViewport() || isExiting || isBookFocused) return
+
+    clearFocusTimer()
+    setBookFocusState('opening')
+    focusTimer.current = window.setTimeout(() => {
+      setBookFocusState('open')
+      focusTimer.current = null
+    }, 20)
+  }
+
+  function closeBookFocus() {
+    if (!isBookFocused || bookFocusState === 'closing') return
+
+    clearFocusTimer()
+    setBookFocusState('closing')
+    focusTimer.current = window.setTimeout(() => {
+      setBookFocusState('closed')
+      focusTimer.current = null
+    }, FOCUS_TRANSITION_MS)
+  }
 
   function navigateTo(targetPage: number) {
     if (isExiting || targetPage === currentPage) return
@@ -38,11 +80,27 @@ function App() {
       if (exitTimer.current !== null) {
         window.clearTimeout(exitTimer.current)
       }
+
+      clearFocusTimer()
     }
   }, [])
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        if (!isBookFocused || bookFocusState === 'closing') {
+          return
+        }
+
+        clearFocusTimer()
+        setBookFocusState('closing')
+        focusTimer.current = window.setTimeout(() => {
+          setBookFocusState('closed')
+          focusTimer.current = null
+        }, FOCUS_TRANSITION_MS)
+        return
+      }
+
       const target =
         event.key === 'ArrowRight'
           ? currentPage + 1
@@ -69,7 +127,40 @@ function App() {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentPage, isExiting, totalPages])
+  }, [bookFocusState, currentPage, isBookFocused, isExiting, totalPages])
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 1024) {
+        clearFocusTimer()
+        setBookFocusState('closed')
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    if (!isBookFocused) {
+      document.body.style.overflow = ''
+      if (wasBookFocused.current) {
+        focusToggleRef.current?.focus()
+      }
+      wasBookFocused.current = false
+      return
+    }
+
+    document.body.style.overflow = 'hidden'
+    wasBookFocused.current = true
+    if (bookFocusState === 'open') {
+      closeFocusRef.current?.focus()
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [bookFocusState, isBookFocused])
 
   function handleTouchStart(event: React.TouchEvent) {
     touchStartX.current = event.touches[0].clientX
@@ -85,28 +176,74 @@ function App() {
   const surfaceClass = isExiting
     ? `book-surface is-exiting--${direction}`
     : 'book-surface'
+  const sceneClass = [
+    'scene-shell',
+    isBookFocused ? 'has-book-focus' : '',
+    isBookFocused ? `is-book-focus-${bookFocusState}` : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
-    <main className="scene-shell">
-      <section className="scene-copy" aria-label="Contexto do livro">
+    <main className={sceneClass}>
+      {isBookFocused ? (
+        <button
+          type="button"
+          className="book-overlay"
+          aria-label="Fechar leitura em foco"
+          onClick={closeBookFocus}
+        />
+      ) : null}
+
+      <section
+        className="scene-copy"
+        aria-label="Contexto do livro"
+        aria-hidden={isBookFocused}
+      >
         <p className="scene-copy__eyebrow">às apalpadelas</p>
         <h1>Dois anos de construção, um livro para dizer com calma.</h1>
-        <p className="scene-copy__lead">
+        {/* <p className="scene-copy__lead">
           O eu de hoje olha para o eu de 2024 e entende o que faltava nomear:
           a insegurança era só o alicerce secando.
-        </p>
+        </p> */}
 
         <div className="scene-copy__notes">
           <p>
-            Cinco páginas. Cinco pontos de apoio. Um percurso que saiu do acaso,
-            atravessou o escuro e virou certeza.
+            Cinco páginas. Cinco pontos de apoio.
           </p>
         </div>
-        <p className="scene-copy__nav">Navegue pelas setas, pelos botões ou deslize na tela.</p>
+        {/* <p className="scene-copy__nav">Navegue pelas setas, pelos botões ou deslize na tela.</p> */}
       </section>
 
-      <section className="book-stage" aria-label="Livro interativo">
+      <section
+        id="book-stage"
+        className="book-stage"
+        aria-label="Livro interativo"
+        data-focused={isBookFocused}
+      >
         <div className="book-aura" aria-hidden="true" />
+
+        <button
+          ref={focusToggleRef}
+          type="button"
+          className="book-focus-tab"
+          aria-controls="book-stage"
+          aria-expanded={isBookFocused}
+          onClick={openBookFocus}
+        >
+          Foco
+        </button>
+
+        {isBookFocused ? (
+          <button
+            ref={closeFocusRef}
+            type="button"
+            className="book-focus-close"
+            onClick={closeBookFocus}
+          >
+            Fechar
+          </button>
+        ) : null}
 
         <div className="book-frame">
           <div

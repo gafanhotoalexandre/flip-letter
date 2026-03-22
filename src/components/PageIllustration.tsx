@@ -18,38 +18,30 @@ function PageIllustration({ kind }: PageIllustrationProps) {
     case 'footsteps':
       return (
         <svg {...commonProps}>
-          {/* two paths converging to a meeting point */}
-          <path d="M55 190 Q95 145 125 115 Q145 95 160 78" />
-          <path d="M265 190 Q225 145 195 115 Q175 95 160 78" />
-          {/* step marks along left path */}
-          <line x1="70" y1="175" x2="78" y2="182" />
-          <line x1="93" y1="150" x2="101" y2="155" />
-          <line x1="114" y1="127" x2="122" y2="131" />
-          <line x1="137" y1="103" x2="144" y2="106" />
-          {/* step marks along right path */}
-          <line x1="250" y1="175" x2="242" y2="182" />
-          <line x1="227" y1="150" x2="219" y2="155" />
-          <line x1="206" y1="127" x2="198" y2="131" />
-          <line x1="183" y1="103" x2="176" y2="106" />
-          {/* meeting point */}
-          <circle cx="160" cy="78" r="5" fill="currentColor" stroke="none" />
+          {/* left dashed path */}
+          <path d="M50 210 Q60 180 90 150 T160 100" strokeDasharray="8 12" strokeLinecap="round" />
+          {/* right dashed path */}
+          <path d="M270 210 Q260 180 230 150 T160 100" strokeDasharray="8 12" strokeLinecap="round" />
+          {/* destination pin */}
+          <path d="M160 100 C 180 70 180 40 160 40 C 140 40 140 70 160 100 Z" strokeLinejoin="round" />
+          <circle cx="160" cy="65" r="5" fill="currentColor" stroke="none" />
         </svg>
       )
     case 'hands':
       return (
         <svg {...commonProps}>
-          {/* left arm reaching */}
-          <path d="M25 148 C65 145 105 130 140 110" />
-          {/* left hand tapering to touch */}
-          <path d="M140 110 C148 102 155 96 160 86" />
-          {/* right arm reaching */}
-          <path d="M295 148 C255 145 215 130 180 110" />
-          {/* right hand tapering to touch */}
-          <path d="M180 110 C172 102 165 96 160 86" />
-          {/* contact point */}
-          <circle cx="160" cy="86" r="4" fill="currentColor" stroke="none" />
-          {/* warmth arc */}
-          <path d="M148 74 C153 64 167 64 172 74" />
+          {/* Left Hand Reaching (simpler, open palm line) */}
+          <path
+            d="M30 140 C 60 140, 80 135, 100 125 M100 125 C 115 115, 130 105, 155 105 M100 125 Q 110 135, 120 140"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {/* Right Hand Reaching (symmetrical to left) */}
+          <path
+            d="M290 140 C 260 140, 240 135, 220 125 M220 125 C 205 115, 190 105, 165 105 M220 125 Q 210 135, 200 140"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       )
     case 'umbrella':
@@ -75,26 +67,24 @@ function PageIllustration({ kind }: PageIllustrationProps) {
     case 'bench':
       return (
         <svg {...commonProps}>
+          {/* ground line */}
+          <path d="M30 180 H290" strokeLinecap="round" />
           {/* backrest */}
-          <path d="M75 105 H245" />
+          <rect x="90" y="100" width="140" height="20" rx="4" />
           {/* seat */}
-          <path d="M70 125 H250" />
-          {/* backrest supports */}
-          <path d="M120 105 V125" />
-          <path d="M200 105 V125" />
+          <rect x="80" y="130" width="160" height="12" rx="6" />
           {/* legs */}
-          <path d="M85 125 L78 175" />
-          <path d="M235 125 L242 175" />
-          {/* ground */}
-          <path d="M60 175 H260" />
+          <path d="M95 142 L85 180 M225 142 L235 180 M130 142 V180 M190 142 V180" strokeLinecap="round" />
           {/* left figure */}
-          <circle cx="130" cy="82" r="9" fill="currentColor" stroke="none" />
-          <path d="M130 91 V105" />
+          <circle cx="130" cy="70" r="10" />
+          <path d="M130 80 V120 M130 120 L145 130 V155" strokeLinecap="round" strokeLinejoin="round" />
           {/* right figure */}
-          <circle cx="190" cy="82" r="9" fill="currentColor" stroke="none" />
-          <path d="M190 91 V105" />
-          {/* connection arc between them */}
-          <path d="M139 88 C152 96 168 96 181 88" />
+          <circle cx="170" cy="75" r="9" />
+          <path d="M170 84 V120 M170 120 L155 130 V155" strokeLinecap="round" strokeLinejoin="round" />
+          {/* arm around shoulder */}
+          <path d="M130 95 C 145 85 165 95 170 95" strokeLinecap="round" />
+          {/* floating heart */}
+          <path d="M150,45 C150,45 142,37 142,30 C142,24 150,24 150,30 C150,24 158,24 158,30 C158,37 150,45 150,45 Z" fill="currentColor" stroke="none" />
         </svg>
       )
     case 'hourglass':
