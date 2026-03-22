@@ -21,7 +21,7 @@ export const bookPages: BookPage[] = [
     title: 'O Ponto de Partida',
     body:
       'Meu foco sempre foi erguer lógicas e resolver impasses. O social ficava para depois — até aquele aplicativo improvável. Dia 4 de março, você sugeriu, eu topei sem pensar. Uma caminhada sem pretensão desviou o rumo de tudo.',
-    aside: 'Dois pares de tênis, a mesma linha, um desvio irreversível.',
+    aside: 'Dois pares de tênis, um mesmo destino.',
     illustration: 'footsteps',
   },
   {
@@ -30,7 +30,7 @@ export const bookPages: BookPage[] = [
     title: 'O Escuro e o Frio na Barriga',
     body:
       'Eu ainda andava às apalpadelas. Ajudar você a atravessar a avenida, segurando sua mão, foi o primeiro passo firme. Depois, o beijo na porta de casa. E a semana longe logo em seguida — servindo ao essencial: compilar o que eu já sentia e ainda não sabia nomear.',
-    aside: 'Toque mínimo, impacto máximo. O corpo entendendo antes da fala.',
+    aside: 'Um toque. O corpo entendendo antes da fala.',
     illustration: 'hands',
   },
   {
@@ -39,7 +39,7 @@ export const bookPages: BookPage[] = [
     title: 'A Pedra Angular',
     body:
       'Festa de São José. A cidade apagou, os desencontros no escuro, o tatear até nos acharmos. Conhecer o seu mundo dissolveu as inseguranças. Naquela noite, escapando da chuva de carona, a ficha caiu: eu estava prestes a te amar absurdamente.',
-    aside: 'Quando a cidade falhou, a certeza acendeu.',
+    aside: 'Quando a luz da cidade falhou..',
     illustration: 'umbrella',
   },
   {
@@ -48,7 +48,7 @@ export const bookPages: BookPage[] = [
     title: 'A Construção',
     body:
       'Não vivo com saudade do que fomos. Vivo com alívio por termos chegado aqui. Hoje, somos porto seguro no meio da correria. Ainda assim, a raiz de tudo segue naquela cena: nós dois no banco da praça, você juntando coragem para perguntar, e eu, bobamente confuso, tentando entender a sorte que tinha.',
-    aside: 'O amor não surgiu pronto. Foi ficando de pé.',
+    aside: 'O amor ficando de pé.',
     illustration: 'bench',
   },
   {

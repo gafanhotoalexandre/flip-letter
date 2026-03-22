@@ -258,7 +258,7 @@ function App() {
         <div className="book-toolbar">
           <button
             type="button"
-            className="book-button"
+            className="book-button sr-only-focusable"
             onClick={() => navigateTo(currentPage - 1)}
             disabled={currentPage === 0 || isExiting}
           >
@@ -277,7 +277,7 @@ function App() {
 
           <button
             type="button"
-            className="book-button"
+            className="book-button sr-only-focusable"
             onClick={() => navigateTo(currentPage + 1)}
             disabled={currentPage === totalPages - 1 || isExiting}
           >
