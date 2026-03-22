@@ -1,0 +1,351 @@
+/* === Scene layout (mobile-first: base = small screens) === */
+
+.scene-shell {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  width: min(100%, calc(100% - 1rem));
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 2rem 0;
+  justify-items: center;
+}
+
+.scene-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 42rem);
+  padding: 0 0.75rem;
+  color: rgba(247, 240, 223, 0.92);
+  text-align: center;
+  justify-items: center;
+}
+
+.scene-copy__eyebrow {
+  color: rgba(247, 240, 223, 0.48);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.scene-copy h1 {
+  max-width: 10ch;
+  color: #fff7e8;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 3.6rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.scene-copy__lead {
+  max-width: 38rem;
+  color: rgba(247, 240, 223, 0.78);
+  font-size: 1rem;
+}
+
+.scene-copy__notes {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 34rem;
+  margin-top: 0.5rem;
+  color: rgba(247, 240, 223, 0.52);
+  font-size: 0.9rem;
+}
+
+.scene-copy__nav {
+  color: rgba(247, 240, 223, 0.36);
+  font-size: 0.8rem;
+}
+
+/* === Book stage === */
+
+.book-stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.book-aura {
+  position: absolute;
+  inset: auto auto 3rem 50%;
+  width: min(90vw, 34rem);
+  height: min(50vw, 16rem);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--scene-glow) 0%, rgba(210, 144, 104, 0.04) 50%, transparent 70%),
+    radial-gradient(circle at center, var(--scene-glow-strong) 0%, transparent 75%);
+  transform: translateX(-50%);
+}
+
+.book-frame {
+  position: relative;
+  width: min(100%, 28rem);
+  aspect-ratio: 10 / 13;
+  padding: 0.75rem;
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(145deg, rgba(255, 248, 236, 0.08), rgba(255, 255, 255, 0.02)),
+    linear-gradient(180deg, rgba(255, 244, 223, 0.06), transparent);
+  box-shadow: var(--shadow-book);
+}
+
+.book-surface {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.15rem;
+  contain: content;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 8%),
+    linear-gradient(135deg, #fef9ed 0%, var(--paper) 50%, #f0e0c2 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(91, 47, 39, 0.08),
+    inset 0 0 32px rgba(129, 84, 56, 0.1),
+    var(--shadow-lg);
+}
+
+.book-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(104, 56, 48, 0.06), transparent 6%, transparent 94%, rgba(104, 56, 48, 0.06)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent 10%, transparent 90%, rgba(90, 56, 45, 0.04));
+}
+
+/* === Kindle-style page transition === */
+
+.book-page {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  padding: 1.25rem;
+  color: var(--ink);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.book-surface.is-exiting--next .book-page {
+  opacity: 0;
+  transform: translateX(-0.75rem);
+}
+
+.book-surface.is-exiting--prev .book-page {
+  opacity: 0;
+  transform: translateX(0.75rem);
+}
+
+/* === Page content === */
+
+.book-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(73, 40, 49, 0.08);
+}
+
+.book-page__kicker,
+.book-page__counter,
+.book-page__figure figcaption {
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.book-page__counter {
+  font-variant-numeric: tabular-nums;
+}
+
+.book-page__body {
+  display: grid;
+  align-content: space-between;
+  gap: 1.25rem;
+  min-height: 0;
+  padding-top: 1.25rem;
+}
+
+.book-page__copy {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.book-page__copy h2 {
+  max-width: 11ch;
+  color: var(--accent-strong);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 600;
+  line-height: 0.97;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.book-page__copy p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.book-page__figure {
+  display: grid;
+  gap: 0.75rem;
+  align-self: end;
+}
+
+.page-illustration {
+  width: min(100%, 16rem);
+  color: var(--accent);
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* === Toolbar (mobile-first: progress on top, buttons side by side) === */
+
+.book-toolbar {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(100%, 28rem);
+}
+
+.book-progress {
+  grid-column: 1 / -1;
+  order: -1;
+  display: grid;
+  gap: 0.45rem;
+  color: rgba(247, 240, 223, 0.8);
+  text-align: center;
+}
+
+.book-progress span {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.book-progress__track {
+  overflow: hidden;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: rgba(247, 240, 223, 0.1);
+}
+
+.book-progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #e3c58c, #cb865f 58%, #9a5c44 100%);
+  transition: width 240ms ease;
+}
+
+.book-button {
+  min-height: 2.75rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--button-border);
+  border-radius: 999px;
+  background: var(--button-bg);
+  color: rgba(247, 240, 223, 0.88);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 180ms ease, border-color 180ms ease, opacity 180ms ease;
+}
+
+.book-button:hover:not(:disabled) {
+  background: rgba(247, 240, 223, 0.12);
+  border-color: rgba(247, 240, 223, 0.26);
+}
+
+.book-button:focus-visible {
+  outline: 2px solid rgba(247, 240, 223, 0.8);
+  outline-offset: 3px;
+}
+
+.book-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+/* === Reduced motion === */
+
+@media (prefers-reduced-motion: reduce) {
+  .book-page,
+  .book-button,
+  .book-progress__fill {
+    transition: none !important;
+  }
+}
+
+/* === Desktop expansion === */
+
+@media (min-width: 64rem) {
+  .scene-shell {
+    grid-template-columns: minmax(16rem, 28rem) minmax(20rem, 34rem);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4.5rem);
+    width: min(1220px, calc(100% - 2rem));
+    padding: clamp(2rem, 5vw, 4rem) 0;
+  }
+
+  .scene-copy {
+    text-align: left;
+    justify-items: start;
+    gap: 1.5rem;
+  }
+
+  .scene-copy h1 {
+    max-width: 11ch;
+    font-size: clamp(3.2rem, 5vw, 5.6rem);
+  }
+
+  .book-frame {
+    width: min(100%, 34rem);
+    padding: 1rem;
+    border-radius: 2rem;
+  }
+
+  .book-surface {
+    border-radius: 1.55rem;
+  }
+
+  .book-page {
+    padding: 2rem;
+  }
+
+  .book-page__copy h2 {
+    font-size: clamp(2rem, 4vw, 2.9rem);
+  }
+
+  .page-illustration {
+    width: min(100%, 20rem);
+  }
+
+  .book-toolbar {
+    grid-template-columns: auto minmax(12rem, 1fr) auto;
+    width: min(100%, 34rem);
+  }
+
+  .book-progress {
+    grid-column: auto;
+    order: 0;
+  }
+
+  .book-button {
+    min-width: 7.5rem;
+  }
+}

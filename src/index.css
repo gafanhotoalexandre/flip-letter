@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #2d1e21;
+  --ink-soft: rgba(45, 30, 33, 0.72);
+  --ink-faint: rgba(45, 30, 33, 0.48);
+  --paper: #f7f0df;
+  --paper-edge: #eadcc0;
+  --paper-shadow: rgba(46, 27, 35, 0.22);
+  --line: rgba(73, 40, 49, 0.16);
+  --accent: #9a5c44;
+  --accent-strong: #6f2f2a;
+  --scene: #201619;
+  --scene-deep: #120c0f;
+  --scene-glow: rgba(210, 144, 104, 0.28);
+  --scene-glow-strong: rgba(215, 181, 123, 0.16);
+  --button-bg: rgba(247, 240, 223, 0.08);
+  --button-border: rgba(247, 240, 223, 0.18);
+  --shadow-lg: 0 28px 90px rgba(0, 0, 0, 0.34);
+  --shadow-book: 0 36px 80px rgba(8, 4, 6, 0.46);
+  --font-body: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(204, 141, 98, 0.24), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(223, 196, 144, 0.1), transparent 28%),
+    linear-gradient(160deg, var(--scene) 0%, #27181d 42%, var(--scene-deep) 100%);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100svh;
+  margin: 0;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+h1,
+h2,
+p,
+figure {
+  margin: 0;
+}
+
+::selection {
+  background: rgba(154, 92, 68, 0.24);
+}
+
+@media (min-width: 45rem) {
+  :root {
+    font-size: 1.0625rem;
+  }
+}
